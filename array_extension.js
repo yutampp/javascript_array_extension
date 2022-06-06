@@ -10,9 +10,15 @@ Array.prototype.cutting = function(n){
     return acc
   },[[]]);
 }
+/*■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+1次配列の平均値を返す。
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 Array.prototype.average = function(){
   return this.reduce((acc,v)=>acc+v)/this.length;
 }
+/*■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+nのサンプリング幅で1次配列の単純移動平均を返す。
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 Array.prototype.sma = function(n){
   const pp = Math.floor(n);
   const self = this;
@@ -23,12 +29,18 @@ Array.prototype.sma = function(n){
     return self.slice(st,en).reduce((acc,v)=>acc+v)/du;
   });
 }
+/*■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+nのサンプリング幅で1次配列の単純移動平均をi回行う。
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 Array.prototype.xsma = function(n,i){
   i = i || 1;
   console.log(n,i)
   if(i<=1) return this.sma(n)
   return this.xsma(n,i-1).sma(n);
 }
+/*■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 Array.prototype.max = function(n){
   n = n || 1;
   const temp = this.map(v=>Math.abs(v) );
