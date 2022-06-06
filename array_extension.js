@@ -39,18 +39,31 @@ Array.prototype.xsma = function(n,i){
   return this.xsma(n,i-1).sma(n);
 }
 /*■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
-
+1次配列の絶対値で一番大きい単一の値を返す。
 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 Array.prototype.max = function(n){
   n = n || 1;
   const temp = this.map(v=>Math.abs(v) );
+  const large = function(ARRAY, N ){
+    N = Math.floor(N);
+    if(N<=0 | ARRAY.length==0) return NaN
+    const M = ARRAY.reduce((acc,v)=>acc<v?v:acc);
+    const new_array = ARRAY.filter(v=>v!==M);
+    return N==1?M:large(new_array,N-1);
+  }
   return large(temp,n);
 }
+/*■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+ノーマライズを行う。引数の数値が最大値（絶対値）となる。
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 Array.prototype.normalize = function(n){
   n = n || 1;
   const max = this.max();
   return this.map(v=>n*v/max);
 }
+/*■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+ゼロクロス点で配列を分割する。
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 function split_zerocross(data){
   let temp = 0;
   let asc = false;
@@ -68,6 +81,9 @@ function split_zerocross(data){
     return acc
   },[])
 }
+/*■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+ゼロクロス点のインデックスと、その間の最大値を返す。
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■*/
 function detect_zerocross(data){
   let temp = 0;
   let asc = false;
